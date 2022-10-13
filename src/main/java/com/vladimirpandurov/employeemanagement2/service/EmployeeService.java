@@ -1,5 +1,6 @@
 package com.vladimirpandurov.employeemanagement2.service;
 
+import com.vladimirpandurov.employeemanagement2.exception.UserNotFoundException;
 import com.vladimirpandurov.employeemanagement2.model.Employee;
 import com.vladimirpandurov.employeemanagement2.repo.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,8 @@ public class EmployeeService {
         return employeeRepo.save(employee);
     }
 
-    public Optional<Employee> findEmployeeById(Long id){
-        return employeeRepo.findEmployeeById(id);
+    public Employee  findEmployeeById(Long id){
+        return employeeRepo.findEmployeeById(id).orElseThrow(()->new UserNotFoundException("User by id " + id + " was not found"));
     }
 
     public void deleteEmployee(Long id){
